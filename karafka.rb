@@ -19,19 +19,34 @@ end
 
 
 class KarafkaApp < Karafka::App
+
+  # https://github.com/karafka/karafka/wiki/Configuration
+  # https://github.com/karafka/karafka/blob/master/lib/karafka/setup/config.rb
+
   setup do |config|
-    config.kafka.seed_brokers = %w[kafka://127.0.0.1:9092]
+    config.kafka.seed_brokers = %w[kafka://kafka.docker:9092]
     config.client_id = 'example_app'
+    config.batch_fetching = false
+    config.batch_consuming = false
+    config.backend = :inline
+    # config.monitor =
+    # config.consumer_mapper = # Mapper for building consumer ids
+    # config.topic_mapper = # Mapper for hiding Kafka provider specific topic prefixes/postfixes, so internaly we use "pure" topics
+    # config.deserializer = Karafka::Serialization::Json::Deserializer
+    # config.serializer = Karafka::Serialization::Json::Serializer
+    config.shutdown_timeout = 3
     config.logger = Rails.logger
+    config.logger.level = :info
   end
 
   # Comment out this part if you are not using instrumentation and/or you are not
   # interested in logging events for certain environments. Since instrumentation
   # notifications add extra boilerplate, if you want to achieve max performance,
   # listen to only what you really need for given environment.
-  Karafka.monitor.subscribe(WaterDrop::Instrumentation::StdoutListener.new)
-  Karafka.monitor.subscribe(Karafka::Instrumentation::StdoutListener.new)
-  Karafka.monitor.subscribe(Karafka::Instrumentation::ProctitleListener.new)
+
+  #Karafka.monitor.subscribe(WaterDrop::Instrumentation::StdoutListener.new)
+  #Karafka.monitor.subscribe(Karafka::Instrumentation::StdoutListener.new)
+  #Karafka.monitor.subscribe(Karafka::Instrumentation::ProctitleListener.new)
 
   # Uncomment that in order to achieve code reload in development mode
   # Be aware, that this might have some side-effects. Please refer to the wiki
@@ -46,7 +61,11 @@ class KarafkaApp < Karafka::App
 
   consumer_groups.draw do
     topic :test2 do
-       consumer ApplicationConsumer
+       consumer TestTwoConsumer
+    end
+
+    topic :test3 do
+      consumer TestThreeConsumer
     end
 
     # consumer_group :bigger_group do
