@@ -60,13 +60,31 @@ class KarafkaApp < Karafka::App
   # )
 
   consumer_groups.draw do
-    topic :test2 do
-       consumer TestTwoConsumer
+
+    topic :users do
+       consumer UserProfileUpdater
+       responder SendProfileUpdateNotification
+
+       backend :inline
     end
 
-    topic :test3 do
-      consumer TestThreeConsumer
+    topic :user_profile_update_notifications do
+      consumer UserProfileUpdatesConsumer
+
+      #serializer   CustomerSerializer
+      #deserializer CustomerDeserializer
     end
+
+
+    # consumer_group :voice do
+    #   topic :test2 do
+    #     consumer TestTwoConsumer
+    #   end
+
+    #   topic :test3 do
+    #     consumer TestThreeConsumer
+    #   end
+    # end
 
     # consumer_group :bigger_group do
     #   topic :test do
