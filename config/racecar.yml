@@ -1,0 +1,23 @@
+# https://github.com/zendesk/racecar/blob/v1.0.0/lib/racecar/config.rb
+
+# These config values will be shared by all environments but can be overridden.
+common: &common
+  client_id: "kafka_frameworks"
+
+development:
+  <<: *common
+  brokers:
+    - kafka.docker:9092
+  max_bytes: 10
+
+test:
+  <<: *common
+  brokers:
+    - localhost:9092
+
+production:
+  <<: *common
+  brokers:
+    - kafka1.myapp.com:9092
+    - kafka2.myapp.com:9092
+    - kafka3.myapp.com:9092
