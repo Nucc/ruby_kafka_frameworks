@@ -80,19 +80,19 @@ backoff:
   max_ms: 60000
 
 listeners:
-  - handler: TestConsumer
-    topic: test2
+  - handler: UserConsumer
+    topic: users
     # id of the group that the consumer should join
-    group_id: test-2-3
+    group_id: users-consumer-1
     # Number of threads created for this listener, each thread will behave as an independent consumer.
     # They don't share any state
-    max_concurrency: 1
+    max_concurrency: 2
     # Once the consumer group has checkpointed its progress in the topic's partitions,
     # the consumers will always start from the checkpointed offsets, regardless of config
     # As such, this setting only applies when the consumer initially starts consuming from a topic
     start_from_beginning: true
     # maximum amount of data fetched from a single partition at a time
-    max_bytes_per_partition: 2000 # 512 KB
+    max_bytes_per_partition: 200000 # 512 KB
     # Minimum number of bytes to read before returning messages from the server; if `max_wait_time` is reached, this is ignored.
     min_bytes: 1
     # Maximum duration of time to wait before returning messages from the server, in seconds
