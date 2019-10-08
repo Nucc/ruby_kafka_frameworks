@@ -5,15 +5,17 @@ class UsersConsumer < Racecar::Consumer
 
   def initialize
     # before all
+    # note that some components might not have been initialized
   end
 
   def process(message)
-    puts "[p #{message.partition}, o #{message.offset}] #{message}"
+    puts "[p #{message.partition}, o #{message.offset}] #{message.inspect}"
     sleep 0.5
   end
 
   def teardown
     # after all
+    puts 'Calling #teardown'
   end
 
   # consumer keeps the state, requests are not isolated,

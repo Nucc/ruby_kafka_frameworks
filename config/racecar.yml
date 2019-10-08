@@ -4,11 +4,52 @@
 common: &common
   client_id: "kafka_frameworks"
 
+  # group_id_prefix: 'kafka_frameworks'
+
+  # How frequently to commit offset positions
+  offset_commit_interval: 10
+
+  # How many messages to process before forcing a checkpoint
+  offset_commit_threshold: 5
+
+  # How often to send a heartbeat message to Kafka
+  heartbeat_interval: 10
+
+  # The maximum number of fetch responses to keep queued before processing
+  max_fetch_queue_size: 10
+
+  # How long to pause a partition for if the consumer raises an exception
+  # while processing a message -- set to -1 to pause indefinitely
+  pause_timeout: 10
+
+  # When `pause_timeout` and `pause_with_exponential_backoff` are configured,
+  # this sets an upper limit on the pause duration
+  max_pause_timeout: 60
+
+  # Whether to exponentially increase the pause timeout on successive errors
+  #  -- the timeout is doubled each time
+  pause_with_exponential_backoff: true
+
+  # The idle timeout after which a consumer is kicked out of the group
+  session_timeout: 30
+
+  # How long to wait when trying to connect to a Kafka broker
+  connect_timeout: 10
+
+  # How long to wait when trying to communicate with a Kafka broker
+  socket_timeout: 30
+
+  # How long to allow the Kafka brokers to wait before returning messages
+  max_wait_time: 1
+
+  max_bytes: 1000
+
+  log_level: debug
+
 development:
   <<: *common
   brokers:
     - kafka.docker:9092
-  max_bytes: 10
 
 test:
   <<: *common
