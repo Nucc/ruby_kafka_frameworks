@@ -66,6 +66,10 @@ class KarafkaApp < Karafka::App
        responder SendProfileUpdateNotification
 
        backend :inline
+
+       # max_bytes_per_partition 100
+       # start_from_beginning true
+       # batch_consuming false
     end
 
     topic :user_profile_update_notifications do
@@ -75,7 +79,8 @@ class KarafkaApp < Karafka::App
       #deserializer CustomerDeserializer
     end
 
-
+    # Each consumer group is one thread (+ 1 ruby-kafka thread)
+    #
     # consumer_group :voice do
     #   topic :test2 do
     #     consumer TestTwoConsumer

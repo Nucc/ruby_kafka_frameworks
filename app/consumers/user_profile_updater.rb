@@ -24,6 +24,7 @@ class UserProfileUpdater < ApplicationConsumer
 
     respond_with(params.payload)
 
+
   rescue => exception
     puts exception
   end
