@@ -31,3 +31,6 @@ consumer.subscribe('users')
 consumer.each_message { |message| p message }
 consumer.each_message { |message| p message; consumer.commit_offsets }
 consumer.each_message(min_bytes: 1000, max_bytes: 10485760, max_wait_time: 30, automatically_mark_as_processed: true) { |message| p message }
+
+# before each_message, create a new consumer if you've already called each_message on the consumer
+consumer.seek('users', 0, 0)
