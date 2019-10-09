@@ -1,7 +1,4 @@
-config = {
-  :"bootstrap.servers" => "kafka.docker:9092",
-  :"group.id" => "ruby-test"
-}
+config = { "bootstrap.servers": "kafka.docker:9092", "group.id": "ruby-test" }
 
 consumer = Rdkafka::Config.new(config).consumer
 consumer.subscribe("users")
@@ -10,6 +7,8 @@ consumer.each do |message|
   puts "Message received: #{message}"
 end
 
+producer = Rdkafka::Config.new(config).producer
+producer.produce(topic: "users", payload: "Payload")
 
 delivery_handles = []
 producer = Rdkafka::Config.new(config).producer
