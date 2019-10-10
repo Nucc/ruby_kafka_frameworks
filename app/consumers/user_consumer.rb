@@ -1,5 +1,6 @@
 class UserConsumer
   include Phobos::Handler
+  # include Phobos::Producer
 
   def self.start(kafka_client)
     puts "Started, kafka_client:#{kafka_client}"
@@ -28,5 +29,10 @@ class UserConsumer
     p metadata
     p @counter
     sleep 0.5
+
+    # Produce messages
+    #
+    # producer.async_publish('user_notifications', {key: 'value'}.to_json)
+    # producer.publish('user_notifications', {key: 'value'}.to_json)
   end
 end
